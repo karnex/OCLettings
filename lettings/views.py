@@ -2,10 +2,10 @@ from django.shortcuts import render
 from .models import Letting
 
 
-def lettings_index(request):
+def index(request):
     """ Lettings index page of site."""
     lettings_list = Letting.objects.all()
-    return render(request, 'lettings/lettings_index.html', {'lettings_list': lettings_list})
+    return render(request, 'lettings/index.html', {'lettings_list': lettings_list})
 
 
 def letting(request, letting_id):
