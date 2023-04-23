@@ -8,7 +8,7 @@ def index(request):
     return render(request, 'lettings/index.html', {'lettings_list': lettings_list})
 
 
-def letting(request, letting_id):
+def letting(request, letting_id: int):
     """ Letting a specific page of site."""
     letting = Letting.objects.get(id=letting_id)
     return render(request, 'lettings/letting.html', {'title': letting.title, 'address': letting.address})

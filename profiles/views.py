@@ -8,7 +8,7 @@ def index(request):
     return render(request, 'profiles/index.html', {'profiles_list': profiles_list})
 
 
-def profile(request, username):
+def profile(request, username: str):
     """ Display a specific profile """
     profile = Profile.objects.get(user__username=username)
     return render(request, 'profiles/profile.html', {'profile': profile})
