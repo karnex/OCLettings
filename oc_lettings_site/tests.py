@@ -9,3 +9,4 @@ class TestIndex(TestCase):
         response = client.get(reverse('index'))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'index.html')
+        self.assertContains(response, '<h1>Welcome to Holiday Homes</h1>')

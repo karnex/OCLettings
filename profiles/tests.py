@@ -4,6 +4,8 @@ from django.urls import reverse
 
 from profiles.models import Profile
 
+import re
+
 
 class TestProfiles(TestCase):
 
@@ -16,8 +18,11 @@ class TestProfiles(TestCase):
         response = self.client.get(reverse('profiles:index'))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'profiles/index.html')
+        self.assertContains(response, '<h1>Profiles</h1>')
 
     def test_profile_detail(self):
         response = self.client.get(reverse('profiles:profile', args=[self.user.username]))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'profiles/profile.html')
+        title = re.search("<title>(.*)</title>", response.content.decode('utf-8')).group(1)
+        self.assertContains(response, f'<h1>{title}</h1>')

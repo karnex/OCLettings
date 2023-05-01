@@ -7,10 +7,9 @@ on:
       - master
 
 jobs:
-  test-and-lint:  # deploy step, naming: build and deploy
+  test-and-lint:
 
     runs-on: ubuntu-latest
-    #container: karnex/oclettings:latest --> to implement for the CD step --> test container or deploy-pull
 
     steps:
       - uses: actions/checkout@v3  # Pull repo
@@ -22,13 +21,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+      # Lint with Ruff - more fast than flake8
       - uses: chartboost/ruff-action@v1
         with:
           args: --line-length=119
-      - name: Lint wint flake8
-        run: |
-          pip install flake8
-          flake8
       - name: Django testing
         run: |
           python3 manage.py test
