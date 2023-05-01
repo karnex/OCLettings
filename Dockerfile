@@ -10,4 +10,4 @@ ENV env=prod
 # Tells Docker to open port 80 and make it accessible from outside the container
 EXPOSE 80
 
-CMD ["gunicorn", "--bind", ":80", "--workers", "1", "oc_lettings_site.wsgi"]
+CMD ["gunicorn", "--bind", ":80", "--workers", "3", "oc_lettings_site.wsgi"]
