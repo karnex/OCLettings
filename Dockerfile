@@ -7,7 +7,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 ENV env=prod
 
-# Tells Docker to open port 8000 and make it accessible from outside the container
-EXPOSE 8000
+# Tells Docker to open port 80 and make it accessible from outside the container
+EXPOSE 80
 
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:$PORT"]
+CMD ["gunicorn", "--bind", ":80", "--workers", "1", "oc_lettings_site.wsgi"]
