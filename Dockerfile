@@ -1,10 +1,21 @@
-FROM python:3.9
+ARG PYTHON_VERSION=3.10-slim-buster
 
-COPY . /home/OCLettings
-WORKDIR /home/OCLettings
+FROM python:${PYTHON_VERSION}
 
-RUN pip install --no-cache-dir -r requirements.txt
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-EXPOSE 8080
+RUN mkdir -p /code
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
+WORKDIR /code
+
+COPY requirements.txt /tmp/requirements.txt
+RUN set -ex && \
+    pip install --upgrade pip && \
+    pip install -r /tmp/requirements.txt && \
+    rm -rf /root/.cache/
+COPY . /code
+
+EXPOSE 8000
+
+CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "oc_lettings_site.wsgi"]
